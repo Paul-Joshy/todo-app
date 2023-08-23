@@ -11,23 +11,41 @@
       const app = document.getElementById('app');
 
       function List(props){
+        const [item, setItem ] = React.useState('');
         const [ items, setItems ] = React.useState([]);
 
         
+        // event handler for adding task
         function handleKeyPress(e){
             if(e.key === 'Enter' || e.which === 13){
-                setItems([...items,e.target.value]);
+                setItems([...items, item]);
+                setItem("");
             }
+        }
+
+        // event handler for deleting task
+        function deleteTask(e){
+            setItems(items.filter((val,i) => (
+                i != e.target.value
+            )));
+
         }
 
         return(
             <div>
-                <ul>{
-                    items.map((item) => <li key={item}>{item}</li> )}
-                </ul>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
 
-
-                <input onKeyPress={handleKeyPress} type="text"></input>
+                {
+                    items.map((item, index) => <div key={index}>
+                        {/* <input type="checkbox"></input> */}
+                        <span>{item}</span>
+                        <button value={index} onClick={deleteTask}>X</button>
+                    </div> )
+                }
+                </div>
+                <div>
+                    <input onKeyPress={handleKeyPress} type="text" value={item} onChange={e => setItem(e.target.value)}></input>
+                </div>
 
             </div>
         )
@@ -53,4 +71,3 @@
 
     </script>
   </body>
-</html>
