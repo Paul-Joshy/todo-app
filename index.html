@@ -10,11 +10,46 @@
     <script type="text/jsx">
       const app = document.getElementById('app');
 
-      function Header() {
-        return<h1>Todo List</h1>;
+      function List(props){
+        const [ items, setItems ] = React.useState([]);
+
+        
+        function handleKeyPress(e){
+            if(e.key === 'Enter' || e.which === 13){
+                setItems([...items,e.target.value]);
+            }
+        }
+
+        return(
+            <div>
+                <ul>{
+                    items.map((item) => <li key={item}>{item}</li> )}
+                </ul>
+
+
+                <input onKeyPress={handleKeyPress} type="text"></input>
+
+            </div>
+        )
       }
 
-      ReactDOM.render(<Header/>, app);
+      function Header(){
+            return( <div>
+                <h1>Todo List</h1>
+                <p>Because fuck Notion, that's why.</p>
+            </div>)
+      }
+
+      function App() {
+        return(
+            <div>
+                <Header/>
+                <List/>
+            </div>
+        );
+      }
+
+      ReactDOM.render(<App/>, app);
 
     </script>
   </body>
