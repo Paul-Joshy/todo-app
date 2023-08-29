@@ -8,38 +8,43 @@ function List(props) {
 	const [items, setItems] = useState([]);
 
 
-    const elementToFocus = useRef(null);
+	const elementToFocus = useRef(null);
 
-    const [mode, setMode] = useState('normal');
+	const [mode, setMode] = useState('normal');
 
-    useEffect(() => {
-        window.addEventListener("keydown", handleKeyPress);
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyPress);
 
-        return () => {
-            window.removeEventListener('keydown', handleKeyPress);
-        }
-    }, []);
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		}
+	}, []);
 
 
 	// event handler for keyPress
-	function handleKeyPress(e) {
+	const handleKeyPress = (e) => { 
 
-        // Adding task on insert Mode
-        if(mode === "insert"){
-            if (e.key === 'Enter' || e.which == 13) {
-                setItems([...items, item]);
-                setItem("");
-            }
-        }
+		// Set mode is not working for some reason. Need to fix
+		setMode("insert");
+		console.log(mode);
 
-        // Insert Mode
-        if(mode === "normal" && e.key === "i" || e.key === "I"){
-            console.log("insert mode");
-            setMode("insert");
-            if(elementToFocus.current){
-                elementToFocus.current.focus();
-            }
-        }
+		// Adding task on insert Mode
+		// if(mode === "insert"){
+		// 	if (e.key === 'Enter' || e.which == 13) {
+		// 		setItems([...items, item]);
+		// 		setItem("");
+		// 	}
+		// }
+
+		// // Insert Mode
+		// if(mode === "normal" && e.key === "i"){
+		// 	console.log("insert mode");
+		// 	setMode("insert");
+		// 	if( elementToFocus.current){
+		// 		console.log(mode);
+		// 		elementToFocus.current.focus();
+		// 	}
+		// }
 	}
 
 	// event handler for deleting task
@@ -47,8 +52,8 @@ function List(props) {
 		setItems(items.filter((val, i) => (
 			i != e.target.value
 		)));
-
 	}
+
 
 	return (
 		<div>
@@ -68,6 +73,7 @@ function List(props) {
 
 		</div>
 	)
+
 }
 
 function Header() {
@@ -78,15 +84,17 @@ function Header() {
 }
 
 
+
+
 export default function App() {
 
-    return (
-        <div className="main">
-            <div className="container">
-            <Header />
-            <List />
-            </div>
-        </div>
-    );
+	return (
+		<div className="main">
+		<div className="container">
+		<Header />
+		<List />
+		</div>
+		</div>
+	);
 
 }
