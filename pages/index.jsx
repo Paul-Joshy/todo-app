@@ -13,38 +13,40 @@ function List(props) {
 	const [mode, setMode] = useState('normal');
 
 	useEffect(() => {
+
+		console.log("State updated");
+
 		window.addEventListener("keydown", handleKeyPress);
 
-		return () => {
-			window.removeEventListener('keydown', handleKeyPress);
+		if(mode === "insert"){
+			console.log("Insert Mode");
+			if(elementToFocus.current) elementToFocus.current.focus()
 		}
+
+
+		// return () => {
+		// 	window.removeEventListener('keydown', handleKeyPress);
+		// }
+
+
 	}, []);
 
 
 	// event handler for keyPress
 	const handleKeyPress = (e) => { 
 
-		// Set mode is not working for some reason. Need to fix
-		setMode("insert");
-		console.log(mode);
-
 		// Adding task on insert Mode
-		// if(mode === "insert"){
-		// 	if (e.key === 'Enter' || e.which == 13) {
-		// 		setItems([...items, item]);
-		// 		setItem("");
-		// 	}
-		// }
+		if(mode === "insert"){
+			if (e.key === 'Enter' || e.which == 13) {
+				setItems([...items, item]);
+				setItem("");
+			}
+		}
 
-		// // Insert Mode
-		// if(mode === "normal" && e.key === "i"){
-		// 	console.log("insert mode");
-		// 	setMode("insert");
-		// 	if( elementToFocus.current){
-		// 		console.log(mode);
-		// 		elementToFocus.current.focus();
-		// 	}
-		// }
+		// Insert Mode
+		if(mode === "normal" && e.key === "i"){
+			setMode("insert");
+		}
 	}
 
 	// event handler for deleting task
